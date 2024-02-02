@@ -1,57 +1,76 @@
 <script setup>
-import { reactive, computed } from 'vue'
+import { reactive, computed } from "vue";
 
 const review = reactive({
-  author: '',
+  author: "",
   stars: null,
-  text: '',
+  text: "",
   photos: [],
-  isRecomended: true
-})
+  isRecomended: true,
+});
 
+const stars = [1, 2, 3, 4, 5]
+
+const submit = () => {
+  console.log('submit!')
+}
 </script>
 
 <template>
-  <div>
-    <input type="text">
-  </div>
+  <form 
+    @submit.prevent.stop="submit"
+    class="container pt-5 pb-5"
+  >
+    <input
+      type="text"
+      v-model="review.author"
+      placeholder="Ведите Ваше имя"
+      class="form-control mb-3"
+    />
+
+    <textarea
+      v-model="review.text"
+      rows="3"
+      class="form-control mb-3"
+      placeholder="Оставьте отзыв"
+    ></textarea>
+
+    <h4>Оценка</h4>
+    <div
+      v-for="star in stars"
+      :key="star"
+      class="form-check mb-3"
+    >
+      <input class="form-check-input" type="checkbox" value="" :id="`star${ star }`">
+      <label class="form-check-label" :for="`star${ star }`">
+        {{ star }}
+      </label>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Фото</label>
+      <input class="form-control" type="file" />
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="radio"  id="adv1">
+      <label class="form-check-label" for="adv1">
+        Не советую
+      </label>
+    </div>
+
+      <!-- Form Check -->
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="radio"  id="adv2" checked>
+        <label class="form-check-label" for="adv2">
+          Советую
+        </label>
+      </div>
+      <!-- Form Check -->
+
+    <button class="btn btn-primary">Отправить</button>
+  </form>
 </template>
 
 <style>
-.container {
-  width: 300px;
-  height: 100vh;
-  padding: 10px 15px;
-  border: 2px solid salmon;
-}
-.container:hover{
-  background-color: rgb(231, 238, 238);
-  transition: .5s
-}
-input {
-  margin-bottom: 35px;
-}
-ul {
-  list-style: none;
-}
-ul li {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: .5px;
-  margin-bottom: 10px;
-}
-ul li:hover {
-  color:coral;
-  transition: .3s;
-  transform: scaleX(1.07);
-  border-bottom: 1px solid rgb(114, 50, 26);
-}
-
-.output {
-  color: tomato;
-  border-bottom: 1px solid springgreen;
-  margin-bottom: 35px;
-}
 </style>
-
-
