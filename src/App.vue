@@ -1,5 +1,6 @@
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive, computed } from "vue"
+import axios from 'axios'
 
 const review = reactive({
   author: "",
@@ -19,8 +20,23 @@ const previewFilePath = computed(() => {
 const stars = [1, 2, 3, 4, 5];
 
 const submit = () => {
-  console.log("submit!");
-};
+  console.log("submit!")
+
+  axios.post('/api/review', review, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    console.log('Запрос выполнен!')
+  })
+}
 
 const uploadFile = (e) => {
   const [file] = e.target.files;
